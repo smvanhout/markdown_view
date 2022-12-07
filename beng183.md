@@ -47,7 +47,7 @@ These scores are associated with equations and the idea is the higher the Q scor
 
 ## Basic Statistics
 
-Some content.
+![Image](basic_stats.png)
 
 
 ## Analyzing FastQC Output: Per Base Sequence Quality
