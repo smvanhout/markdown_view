@@ -78,3 +78,33 @@ Looking again at the "good" vs "bad" graph outputs, we can see that there is a t
 **Read Trimming**: To remove these poor quality bases, various existing bioinformatics packages can be utilized. One such package is *Scythe*, which uses a machine-learning based algorithm to classify regions that drop off significantly in quality and are likely experimental artifacts. After applying one of these tools to our fastq file and then generating a new FastQC report, we should see a significant reduction in steep drop-offs near the end of these graphs. A sample before and after graph can be seen below.
 
 ![Image](trimmed.png)
+- ###### **Figure 7**: 
+
+## Per Tile Sequence Quality
+
+This figure will only be available if the file has the Illumina sequence identifiers, however, it is a helpful image in figuring out possible areas of issue in the flow cell. This figure is better known as a heatmap, with the cooler colors (shades of blue) representing bases with a quality higher than the average and the warmer colors (red, yellow, orange) representing reads with quality worse than the average read of the sequence (5).
+An ideal Per Tile Sequence Quality heatmap would be entirely dark blue, unlike Figure 8 which includes both good and bad reads and where they are located (Fig. 8).
+
+![Image](tile.png)
+- ###### **Figure 8**: Quality per tile heatmap example (5). There is an area of the flow cell that is producing lower quality reads.
+
+## Per Sequence Quality Scores
+
+Per Sequence Quality Score graphs represent quality scores over all the sequences with the red lining representing the average quality per read. The Y axis is the number of reads and the X axis is the quality score. 
+
+A good library has an exponential graph, ideally with a peak at a quality score greater than 35 (Fig. 9). This would mean the majority of base pairs are statistically likely to be correct. A bad library peaks early or has many peaks, at lower quality score values. 
+
+![Image](psqs.png)
+- ###### **Figure 9**: The first graph shows a worse average quality with more than 1000 reads having a score of around 16 to 20 with the read quality falling off afterwards (6). The second graph shows high quality reads with nearly all reads with a quality score of 38.
+
+## Per Base Sequence Content
+
+Per base sequence content demonstrates the percent of each base is featured in the library. A correct library would have the percent for each being around the same value and the lines staying parallel over all base pairs (Fig. 10). A graph that has bias in the library has spikes and dips which can result in the system giving a warning or error. If there are peaks, it means there can be overrepresented sequences (7).
+
+![Image](pbsc.png)
+
+- ###### **Figure 10**: The first graph features parallel lines and similar percentages (7). The second graph has great peaks at the beginning which shows bias, but evens out later in the graph.
+
+## Per Sequence GC Content
+
+Overall GC content distribution is another important metric to take into account. When the GC distribution over all sequences is plotted, it should look roughly normally distributed. In the graphs below, the blue line represents the known distribution of GC content for an organism, and the red line shows how the experimental reads fit to this distribution.
