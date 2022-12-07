@@ -65,7 +65,7 @@ Other notable features of this graph are listed below (see Fig. 6):
 
 Below is an image depicting two FastQC Per Base Sequence Quality outputs: a "good" one (left), and a "bad" one (right).
 ![Image](good_bad_qs.png)
-- ###### **Figure 6**: 
+- ###### **Figure 6**: (Left) A good per base sequence quality plot that passes this module (13). (Right) A poor per base sequence quality plot that fails this module (13).
 
 When put side-by-side, it is clear why the left graph is better. All of the quality scores, even the biggest outliers, are above 30. On the right graph, we can see that even the middle 50% for the distribution of many positions is below 20 (the red zone). 
 
@@ -78,7 +78,7 @@ Looking again at the "good" vs "bad" graph outputs, we can see that there is a t
 **Read Trimming**: To remove these poor quality bases, various existing bioinformatics packages can be utilized. One such package is *Scythe*, which uses a machine-learning based algorithm to classify regions that drop off significantly in quality and are likely experimental artifacts. After applying one of these tools to our fastq file and then generating a new FastQC report, we should see a significant reduction in steep drop-offs near the end of these graphs. A sample before and after graph can be seen below.
 
 ![Image](trimmed.png)
-- ###### **Figure 7**: 
+- ###### **Figure 7**: A per base sequence quality plot before (left) vs. after (right) quality trimming (14). We can see the quality improve significantly after trimming.
 
 ## Per Tile Sequence Quality
 
@@ -108,3 +108,69 @@ Per base sequence content demonstrates the percent of each base is featured in t
 ## Per Sequence GC Content
 
 Overall GC content distribution is another important metric to take into account. When the GC distribution over all sequences is plotted, it should look roughly normally distributed. In the graphs below, the blue line represents the known distribution of GC content for an organism, and the red line shows how the experimental reads fit to this distribution.
+
+![Image](gc.png)
+- ###### **Figure 11**: (Left) Good GC content distribution. (Right) Bad GC content distribution.(6)
+
+The left graph above is an example of a “good” GC content distribution, whereas the graph on the right is a “bad” example. In the “bad” graph, we can see that certain sections of the red line fit relatively well with the theoretical distribution, however multiple peaks that stray far from the theoretical distribution are also present. These peaks are often due to experimental contaminants (8).
+
+## Per Base N Content
+
+Per base N content gives information about whether there are any uncalled bases in the input read library. The symbol “N” is used to represent an uncalled base, and the corresponding plots show % N content for each base pair position in the reads.
+
+![Image](n_content.png)
+- ###### **Figure 12**: a) A good per base N content plot (2). b) A decent, but not ideal, per base N content plot (3). 
+
+A good read library should have very little, if any, uncalled bases. In the best case, the per base N content plot shows a completely flat line staying at 0% N content throughout all base pair positions (Fig. 12a).
+
+An elevated percentage of uncalled bases (Fig. 12b) may be seen in a read library where the sequencer was unable to make one or more base calls with sufficient confidence (9). In our example, the module still passes, but the user might find the slight peak between base pairs 25 and 31 worth investigating.
+
+
+## Sequence Length Distribution
+
+![Image](lengthd.png)
+- ###### **Figure 13**: A good sequence length distribution plot for a read library with reads of length 40 (2).
+
+The sequence length distribution module informs on the length of the reads in the input library. Before any modifications are made to the original library e.g. read trimming, all read lengths should most likely be the same. However, different read lengths are standard for some sequencing platforms so plots that differ from the example are not necessarily indicative of a sequencing error (10). In the above example, the plot indicates that all read lengths are the same as there is a single peak at sequence length 40, so this would be a good result if the corresponding sequencing platform produced reads of uniform length. If the user subjects their initial read library to read trimming (as discussed previously), they might expect to see different plots between runs.
+
+## Sequence Duplication Levels
+
+![Image](sdl.png)
+- ###### **Figure 14**: a) A good sequence duplication plot (2). b) A bad sequence duplication plot (3). 
+
+Sequence duplication levels provide information on how unique the sequences in a library are. Most sequences will only occur once. The title of the plot indicates what percentage of sequences are unique by detailing the percentage of sequences that would remain if the library were deduplicated.
+
+In the good example, we can see a peak at 1 which indicates that most sequences are unique as they are only found once (Fig. 14a). There is a minor peak at 10 which may be worth investigating but it is also possible to see naturally occurring duplicate sequences in the genome, so the module still passes.
+
+In the flagged example, we can see that only about 70% of sequences are unique (Fig. 14b). There are peaks at 10 and 1000 duplications which indicates something problematic in the library, most likely either the result of technical duplicates from PCR artifacts or naturally occurring biological duplicates (11). There is no way to distinguish between these two origins of duplication based only on the sequences and as such both instances will be reported. 
+
+## Overrepresented Sequences
+
+![Image](ose.png)
+- ###### **Figure 15**: A flagged overrepresented sequences module (3).
+
+The overrepresented sequences module looks for individual sequences that are overrepresented in the library i.e. represent more than 0.1% of the total sequences. 
+
+For a read library which passes the overrepresented sequences module, the user will only see a message which indicates that no overrepresented sequences were found.
+If the module has a warning associated with it, there is at least one sequence that makes up >0.1% of the read library, and if the module fails, there is at least one sequence that makes up >1% of the read library (12). In the flagged example, we can see that there are a number of sequences that make up more than 0.1% of the library (Fig. 15). The table provides the overrepresented sequence itself, the number of times it is observed in the library, the percentage of the library it composes, and the possible source or contaminant that led to the overrepresentation of the sequence. Most of the sources in this example are unknown. 
+
+
+## Conclusion
+
+Checking read quality with FastQC is quick, easy and good practice regardless of whether the quality report turns out good or bad. Read quality control comes in handy in any experiment that requires raw sequencing data as an input or an output e.g. DNA sequencing, RNA sequencing, ChIP-seq, differential expression analysis, functional enrichment analysis and Hi-C.
+
+If the quality report gives mostly positive feedback, the user can feel confident about moving onto the next step of their experiment. FastQC can serve as a checkpoint once the results of an experiment are attained, and the scientist can rule out the possibility that any results seen are the result of a poor sequencing run. If the quality report gives negative feedback, the user can use it as a guide to uncover potential errors or biases in the experiment and mitigate them before next steps obscure their source.
+
+## References
+1. Andrews, S. (n.d.). Babraham Bioinformatics - FastQC a quality control tool for high throughput sequence data. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/  
+2. Andrews, S. (n.d.). GOOD_SEQUENCE_SHORT.TXT FASTQC report. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html#M6 
+3. Andrews, S. (n.d.).BAD _SEQUENCE_SHORT.TXT FASTQC report. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html#M6
+4. Edgar, R. (n.d.). Quality (phred) scores. Retrieved December 6, 2022, from https://www.drive5.com/usearch/manual/quality_score.html   
+5. Andrews, S. (n.d.). Per Tile Sequence Quality. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/12%20Per%20Tile%20Sequence%20Quality.html 
+6. FASTQC Tutorial & FAQ.Michigan State University. (n.d.). Retrieved December 6, 2022, from https://rtsf.natsci.msu.edu/genomics/tech-notes/fastqc-tutorial-and-faq/  
+7. Andrews, S. (n.d.) Per Base Sequence Content. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/4%20Per%20Base%20Sequence%20Content.html 
+8. Andrews, S. (n.d.). Per Sequence GC Content. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/5%20Per%20Sequence%20GC%20Content.html
+9. Andrews, S. (n.d.). Per Base N Content. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/6%20Per%20Base%20N%20Content.html 
+10. Andrews, S. (n.d.). Sequence Length Distribution. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html 
+11. Andrews, S. (n.d.). Duplicate Sequences. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html
+12. Andrews, S. (n.d.). Overrepresented Sequences. Retrieved December 6, 2022, from https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html 
