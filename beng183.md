@@ -26,7 +26,7 @@ If something other than the standard FastQC report is needed or if different opt
 
 # FastQC results: what makes a good vs. bad report?
 
-![Image](fastqc_summary.png)
+![Image](new_fastqc_summary.png)
 - Figure 2: Two FastQC summaries side by side. The first summary has all green checks (2). The second summary includes green checks, yellow exclamations, and red crosses (3).
 
 
