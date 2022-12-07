@@ -35,7 +35,7 @@ If something other than the standard FastQC report is needed or if different opt
 Before we dive into each figure produced by FastQC,we must first talk about an important score used to grade each read's quality. When illumina sequencing produces a FastQ file, each base 
 pair includes a character score (Fig 3.). 
 
-![Image](fastq_line.png)
+![Image](new_fastq_line.png)
 - ###### **Figure 3**: An example of a cluster in a FastQ file. The first line designates the sequence id, the second line is the sequence, the third line is a plus sign and the final sequence is the corresponding score for each base pair.
 
 This score is called the Phred Quality Score and is designated by ASCII+33 characters. This means that the score starts at the thirty third character in an ASCII table, the exclamation point (Fig 4.). 
@@ -48,8 +48,9 @@ These scores are associated with equations and the idea is the higher the Q scor
 ## Basic Statistics
 
 ![Image](basic_stats.png)
+- ###### **Figure 5**: An example of Basic Statistics
 
-
+Basic Statistics is the first figure in the FastQC file (Fig. 5). It is self explanatory, with a table featuring two columns, Measure and Value and the subsequent title for each measure and the value associated with that measure. It includes the filename, the file type, the type of encoding, the total number of sequences, the number of sequences flagged for poor quality, sequence length and percent of GC content.
 ## Analyzing FastQC Output: Per Base Sequence Quality
 
 A key FastQC metric that should be accounted for is **per base sequence quality**. Per base sequence quality refers to the Phred quality score at each position in a read. FastQC summarizes this information in graph form, with the X axis corresponding to what position the base is in the read, and the Y axis corresponding to the quality score. So, the values at position “1” on the X axis would represent the distribution of Phred quality scores for the first base of a read, across every read.
