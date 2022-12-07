@@ -7,7 +7,7 @@ FastQC is an important and easy to use tool for quality control on raw input dat
 FastQC can be used in two different ways depending on your operating system or general preference. Either can be downloaded as an application (Fig 1.) or as a java application that can be used in multiple coding environments.
 
 ![Image](fastqc_hp.png)
-- **Figure 1**: FastQC desktop application start screen (1)
+- ###### **Figure 1**: FastQC desktop application start screen (1)
 
 When using the java application, the following command produces a FastQC HTML file when given a FastQ, SAM or BAM file as input:
 
@@ -28,7 +28,7 @@ If something other than the standard FastQC report is needed or if different opt
 # FastQC results: what makes a good vs. bad report?
 
 ![Image](new_fastqc_summary.png)
-- **Figure 2**: Two FastQC summaries side by side. The first summary has all green checks (2). The second summary includes green checks, yellow exclamations, and red crosses (3).
+- ###### **Figure 2**: Two FastQC summaries side by side. The first summary has all green checks (2). The second summary includes green checks, yellow exclamations, and red crosses (3).
 
 ## Phred Quality Score
 
@@ -36,12 +36,19 @@ Before we dive into each figure produced by FastQC,we must first talk about an i
 pair includes a character score (Fig 3.). 
 
 ![Image](fastq_line.png)
-- **Figure 3**: An example of a cluster in a FastQ file. The first line designates the sequence id, the second line is the sequence, the third line is a plus sign and the final sequence is the corresponding score for each base pair.
+- ###### **Figure 3**: An example of a cluster in a FastQ file. The first line designates the sequence id, the second line is the sequence, the third line is a plus sign and the final sequence is the corresponding score for each base pair.
 
 This score is called the Phred Quality Score and is designated by ASCII+33 characters. This means that the score starts at the thirty third character in an ASCII table, the exclamation point (Fig 4.). 
 
 ![Image](asciipq.png)
-- **Figure 4**: Phred Score Table for new Illumina(4). Q is the score value, P_error is the chance of error, and ASCII is the number in ASCII and the character corresponding with it.
+- ###### **Figure 4**: Phred Score Table for new Illumina(4). Q is the score value, P_error is the chance of error, and ASCII is the number in ASCII and the character corresponding with it.
+
+These scores are associated with equations and the idea is the higher the Q score, the less likely the base pair is wrong. For example, if your base pair has a score of 30, then there is a 99.9% chance that it is the correct base pair. This score is used throughout FastQC, most importantly in Per Base Sequence Quality graphs.
+
+## Basic Statistics
+
+Some content.
+
 
 ## Analyzing FastQC Output: Per Base Sequence Quality
 
