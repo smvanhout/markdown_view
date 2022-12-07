@@ -3,10 +3,11 @@
 FastQC is an important and easy to use tool for quality control on raw input data. It can import data from SAM, BAM, and FastQ files and create an HTML file presenting information about the read quality and sequences of the input file. The FastQC report features several diagrams that represent different metrics of read quality specific to the input file. In this section, each of these metrics will be discussed in detail, including how to interpret their associated diagrams.
 
 ## How to use FastQC
----
+
 FastQC can be used in two different ways depending on your operating system or general preference. Either can be downloaded as an application (Fig 1.) or as a java application that can be used in multiple coding environments.
 
 ![Image](fastqc_hp.png)
+- **Figure 1**: FastQC desktop application start screen (1)
 
 When using the java application, the following command produces a FastQC HTML file when given a FastQ, SAM or BAM file as input:
 
@@ -27,11 +28,23 @@ If something other than the standard FastQC report is needed or if different opt
 # FastQC results: what makes a good vs. bad report?
 
 ![Image](new_fastqc_summary.png)
-- Figure 2: Two FastQC summaries side by side. The first summary has all green checks (2). The second summary includes green checks, yellow exclamations, and red crosses (3).
+- **Figure 2**: Two FastQC summaries side by side. The first summary has all green checks (2). The second summary includes green checks, yellow exclamations, and red crosses (3).
 
+## Phred Quality Score
+
+Before we dive into each figure produced by FastQC,we must first talk about an important score used to grade each read's quality. When illumina sequencing produces a FastQ file, each base 
+pair includes a character score (Fig 3.). 
+
+![Image](fastq_line.png)
+- **Figure 3**: An example of a cluster in a FastQ file. The first line designates the sequence id, the second line is the sequence, the third line is a plus sign and the final sequence is the corresponding score for each base pair.
+
+This score is called the Phred Quality Score and is designated by ASCII+33 characters. This means that the score starts at the thirty third character in an ASCII table, the exclamation point (Fig 4.). 
+
+![Image](asciipq.png)
+- **Figure 4**: Phred Score Table for new Illumina(4). Q is the score value, P_error is the chance of error, and ASCII is the number in ASCII and the character corresponding with it.
 
 ## Analyzing FastQC Output: Per Base Sequence Quality
----
+
 A key FastQC metric that should be accounted for is **per base sequence quality**. Per base sequence quality refers to the Phred quality score at each position in a read. FastQC summarizes this information in graph form, with the X axis corresponding to what position the base is in the read, and the Y axis corresponding to the quality score. So, the values at position “1” on the X axis would represent the distribution of Phred quality scores for the first base of a read, across every read.
 
 ![Image](good_qs.png)
