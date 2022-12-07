@@ -1,6 +1,6 @@
 # FastQC Analysis
----
-FastQC is an important and easy to use tool for quality control on raw input data. It can import data from SAM, BAM, and FastQ files and create an HTML file presenting information about your read quality and sequence. The FastQC report features many important graphs and diagrams that we will cover in detail.
+
+FastQC is an important and easy to use tool for quality control on raw input data. It can import data from SAM, BAM, and FastQ files and create an HTML file presenting information about the read quality and sequences of the input file. The FastQC report features several diagrams that represent different metrics of read quality specific to the input file. In this section, each of these metrics will be discussed in detail, including how to interpret their associated diagrams.
 
 ## How to use FastQC
 ---
@@ -8,12 +8,27 @@ FastQC can be used in two different ways depending on your operating system or g
 
 ![Image](fastqc_hp.png)
 
-If you choose to opt for the java application, you would use the following command to produce a FastQC html file for your FastQ, SAM or BAM files. 
+When using the java application, the following command produces a FastQC HTML file when given a FastQ, SAM or BAM file as input:
 
 `fastqc file.fastq|bam|sam`  
-- command to produce fastqc files from reads
+- Command to produce fastqc files from reads
 
-You can also use the following command to access the help page with detailed descriptions of fastqc commands: `fastqc -h`   
+For example, if the input file were named "my_bam_file.bam", the proper command would be:
+`fastqc my_bam_file.bam`
+If there are multiple files that need to be independently analyzed by FastQC, the filenames can simply be listed one after the other, with spaces to separate them:
+
+`fastqc my_fastq_file1.fastq my_fastq_file2.fastq my_fastq_file3.fastq`
+
+Running the above command would result in a set of FastQC quality control reports, one for each input file (1).
+
+If something other than the standard FastQC report is needed or if different options need to be specified for a run, the following command opens the FastQC help file which contains detailed descriptions of all FastQC program options (1):`fastqc -h`   
+
+
+# FastQC results: what makes a good vs. bad report?
+
+![Image](fastqc_summary.png)
+- Figure 2: Two FastQC summaries side by side. The first summary has all green checks (2). The second summary includes green checks, yellow exclamations, and red crosses (3).
+
 
 ## Analyzing FastQC Output: Per Base Sequence Quality
 ---
